@@ -1,0 +1,55 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col col-md-6">
+                <h5 class="card-title">
+                    {{ '::Menu:Books' | abpLocalization }}
+                </h5>
+            </div>
+            <div class="text-end col col-md-6">
+                <div class="text-lg-end pt-2">
+                    <button nz-button nzType="primary" type="button" (click)="createBook()"
+                            *abpPermission="'BookStore.Books.Create'">
+                        <i class="fa fa-plus me-1"></i>
+                        <span>{{ "::NewBook" | abpLocalization }}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+        <nz-table #basicTable [nzData]="book.items">
+            <thead>
+            <tr>
+                <th>{{'::Author' | abpLocalization}}</th>
+                <th>{{'::Type' | abpLocalization}}</th>
+                <th>{{'::PublishDate' | abpLocalization}}</th>
+                <th>{{'::Price' | abpLocalization}}</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td>{{data.name}}</td>
+                <td>{{ '::Enum:BookType.' + data.type | abpLocalization }}</td>
+                <td>{{ data.publishDate | date }}</td>
+                <td>{{ data.price | currency }}</td>
+                <td>
+                    <ul nz-menu nzMode="horizontal">
+                        <li nz-submenu nzPlacement="bottomLeft" nzTitle="Actions">
+                            <ul>
+                                <li nz-menu-item *abpPermission="'BookStore.Books.Edit'" (click)="editBook(data.id)">
+                                    {{ '::Edit' | abpLocalization }}
+                                </li>
+                                <li nz-menu-item *abpPermission="'BookStore.Books.Delete'" (click)="delete(data.id)">
+                                    {{ '::Delete' | abpLocalization }}
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>

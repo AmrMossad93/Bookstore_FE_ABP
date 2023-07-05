@@ -1,0 +1,54 @@
+<div class="card">
+    <div class="card-header">
+        <div class="row">
+            <div class="col col-md-6">
+                <h5 class="card-title">
+                    {{ '::Menu:Authors' | abpLocalization }}
+                </h5>
+            </div>
+            <div class="text-end col col-md-6">
+                <div class="text-lg-end pt-2">
+                    <button nz-button nzType="primary" type="button" (click)="createAuthor()"
+                            *abpPermission="'BookStore.Authors.Create'">
+                        <i class="fa fa-plus me-1"></i>
+                        <span>{{ "::NewAuthor" | abpLocalization }}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card-body">
+
+        <nz-table #basicTable [nzData]="author.items">
+            <thead>
+            <tr>
+                <th>{{'::Name' | abpLocalization}}</th>
+                <th>{{'::BirthDate' | abpLocalization}}</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let data of basicTable.data">
+                <td>{{data.name}}</td>
+                <td>{{ data.birthDate | date }}</td>
+                <td>
+                    <ul nz-menu nzMode="horizontal">
+                        <li nz-submenu nzPlacement="bottomLeft" nzTitle="Actions">
+                            <ul>
+                                <li nz-menu-item *abpPermission="'BookStore.Books.Edit'" (click)="editAuthor(data.id)">
+                                    {{ '::Edit' | abpLocalization }}
+                                </li>
+                                <li nz-menu-item *abpPermission="'BookStore.Books.Delete'" (click)="delete(data.id)">
+                                    {{ '::Delete' | abpLocalization }}
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+            </tbody>
+        </nz-table>
+    </div>
+</div>
+
+
